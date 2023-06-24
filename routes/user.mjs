@@ -6,7 +6,7 @@ const router = express.Router();
 
 // Update user details
 router.put('/:id', async (req, res) => {
-  if (req.body.userId == req.params.id) {
+  if (req.body.userId === req.params.id) {
     if (req.body.password) {
       try {
         const salt = await bcrypt.genSalt(10);
@@ -24,6 +24,19 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+//DELETE DETAILS
+router.delete('/:id',async(req,res)=>{
+  if(req.body.userId===req.param.id){
+    try{
+      await User.findByIdAndDelete(req.param.id)
+      res.status(200).json("Account has been deleted")
+    }
+    catch(err){
+    res.status(500).json("You can delete only your account")
+    }
+
+  }
+})
 
 export default router;
  
