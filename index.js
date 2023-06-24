@@ -1,6 +1,7 @@
 import cors from 'cors';
 import userRegister from './routes/auth.mjs'
 import userLogin from './routes/auth.mjs'
+import userUpdate from './routes/user.mjs'
 import express from 'express'
 import mongoose from 'mongoose'
 import morgan from 'morgan'
@@ -30,6 +31,7 @@ app.use(helmet())
 app.use(morgan("common"))
 app.use('/api/register',userRegister)
 app.use('/api/login',userLogin)
+app.use('/api/users',userUpdate)
 
 app.get('/',(req,res)=>{
   res.send("Welcome to Home Page")
