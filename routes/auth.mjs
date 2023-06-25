@@ -22,6 +22,7 @@ router.post('/register', async (req, res) => {
     });
 
     const user = await newRegister.save();
+    console.log(user)
     res.status(200).json({
       message: 'Registration Successful',
       user,
@@ -45,7 +46,6 @@ router.post('/login', async (req, res) => {
     if (!login) {
       return res.status(404).json('User Not Found');
     }
-
     const validPassword = await bcrypt.compare(req.body.password, login.password);
     if (!validPassword) {
       return res.status(400).json('Wrong Password');
