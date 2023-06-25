@@ -6,18 +6,27 @@ const router = express.Router();
 // REGISITER
 router.post('/register', async (req, res) => {
   try {
+    const { name, email, password } = req.body;
+
+    if (!name || !email || !password) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
     const newRegister = new User({
-      name: req.body.name,
-      email: req.body.email,
+      name,
+      email,
       password: hashedPassword,
     });
+
     const user = await newRegister.save();
     res.status(200).json({
-      message: "Registration Successful",
-      user: user
+      message: 'Registration Successful',
+      user,
     });
+  
   } catch (err) {
     if (err.code === 11000 && err.keyPattern && err.keyValue && err.keyValue.email) {
       res.status(400).json({ error: "Email already exists" });

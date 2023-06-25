@@ -14,10 +14,7 @@ import mongoose from 'mongoose'
         require:true,
         min:3
     },
-    gender:{
-        type:String,
-        enum: ['male', 'female', 'other']
-    }
+
  },{timestamps:true}
  )
  export default mongoose.model("User",RegisterSchema)
